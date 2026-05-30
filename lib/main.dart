@@ -9,8 +9,6 @@ void main() async {
 
   final preferences = await SharedPreferences.getInstance();
   final isDarkTheme = preferences.getBool('isDarkTheme') ?? false;
-  //Просмотерл ли пользователь онбординги
- // final isOnboardShown = 
   await Hive.initFlutter();
   await Hive.openBox('todoBox');
 
@@ -26,13 +24,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
   late bool isDarkTheme;
   late bool isOnboardShown;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isDarkTheme = widget.isDarkTheme;
   } 

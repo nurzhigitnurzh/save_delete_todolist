@@ -30,7 +30,6 @@ class _DetailPageState extends State<DetailPage> {
     print("Detail Page - initState");
     final repo = AppRepositoryImpl(db: widget.database);
     vm = DetailViewModel(repo: repo);
-    // Заполняем поле текущим названием задачи
     _controller = TextEditingController(text: widget.todo.title);
   }
  
