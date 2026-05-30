@@ -3,7 +3,6 @@ import 'package:flutter_application_3/add/add_view_model.dart';
 import 'package:flutter_application_3/database/app_database.dart';
 import 'package:flutter_application_3/database/app_repository.dart';
 import 'package:flutter_application_3/database/todo.dart';
-
 class AddPage extends StatefulWidget {
   final AppDatabase database;
   const AddPage({required this.database});

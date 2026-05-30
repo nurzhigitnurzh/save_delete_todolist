@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_application_3/home/home_page.dart';
-import 'package:flutter_application_3/onboarding/onboarding_page.dart'; 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final preferences = await SharedPreferences.getInstance();
   final isDarkTheme = preferences.getBool('isDarkTheme') ?? false;
-  
-  // Считываем, просмотрел ли пользователь онбординги
-  final isOnboardShown = preferences.getBool('isOnboardShown') ?? false;
+  //Просмотерл ли пользователь онбординги
+ // final isOnboardShown = 
+  await Hive.initFlutter();
+  await Hive.openBox('todoBox');
 
-  runApp(MyApp(isDarkTheme: isDarkTheme, isOnboardShown: isOnboardShown));
+  runApp(MyApp(isDarkTheme: isDarkTheme));
 }
 
 class MyApp extends StatefulWidget {
   final bool isDarkTheme;
-  final bool isOnboardShown;
-
-  const MyApp({super.key, required this.isDarkTheme, required this.isOnboardShown});
+  const MyApp({super.key, required this.isDarkTheme});
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  // This widget is the root of your application.
   late bool isDarkTheme;
   late bool isOnboardShown;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     isDarkTheme = widget.isDarkTheme;
-    isOnboardShown = widget.isOnboardShown;
   } 
 
   @override
@@ -43,10 +44,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      // Делаем проверку и указываем стартовый экран
-      home: isOnboardShown 
-          ? MyHomePage(isDarkTheme: isDarkTheme, onThemeChanged: changeTheme)
-          : OnboardingPage(isDarkTheme: isDarkTheme, onThemeChanged: changeTheme), 
+      home: MyHomePage(isDarkTheme: isDarkTheme, onThemeChanged: changeTheme), //корневой экран - всегда висит в памяти
     );
   }
 
